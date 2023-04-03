@@ -16,7 +16,7 @@ const verifyAccessToken = asyncHandler(async (req, res, next) => {
             // Đây là một câu lệnh điều kiện để kiểm tra xem token có hợp lệ hay không. Nếu không hợp lệ, nó sẽ trả về mã trạng thái lỗi 401 và một thông báo lỗi.
             if (err) return res.status(401).json({
                 success: false,
-                message: "Access Token không hợp lệ"
+                message: "Access Token không hết hạn"
             })
             console.log(decode);
             //Verifile sang đây !!!
