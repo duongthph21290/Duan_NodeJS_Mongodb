@@ -22,10 +22,10 @@ const verifyAccessToken = asyncHandler(async (req, res, next) => {
             //Verifile sang đây !!!
             // Nếu xác thực token thành công, thông tin về người dùng được giải mã từ token và được gán vào đối tượng yêu cầu (req.user) để các yêu cầu
             //  sau này có thể sử dụng thông tin này.
-            req.user = decode
+            req.user = decode;
 
             // Cuối cùng, mã sẽ gọi hàm next() để chuyển yêu cầu sang middleware tiếp theo trong chuỗi middleware hoặc chuyển đến tuyến đường (route) tương ứng.
-            next()
+            next();
         })
         // Nếu không tìm thấy token truy cập hoặc xác thực token không thành công, mã sẽ trả về mã trạng thái lỗi 401 và một thông báo lỗi.
     } else {
@@ -34,8 +34,18 @@ const verifyAccessToken = asyncHandler(async (req, res, next) => {
             message: "Không tìm thấy authentication"
         })
     }
-})
+});
+const isAdmin = asyncHandler((req, res, next) => {
+    const { role } = req.user;
+    if (role !== 'admin')
+        return res.status(401).json({
+            message: "Bạn không có quyền truy cập!!",
+        })
+    next();
+});
+
 
 module.exports = {
-    verifyAccessToken
+    verifyAccessToken,
+    isAdmin
 }
