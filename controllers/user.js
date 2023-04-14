@@ -18,11 +18,6 @@ const register = asyncHandler(async (req, res) => {
             message: errors,
         });
     }
-    // if (!email || !password || !firstname || !lastnames)
-    //     return res.status(400).json({
-    //         sucess: false,
-    //         message: "Thất bại"
-    //     })
 
     // Kiểm tra email
     const user = await User.findOne({ email })
