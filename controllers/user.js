@@ -79,7 +79,7 @@ const login = asyncHandler(async (req, res) => {
 
 
 
-// Lấy thông tin của 1 user
+// Lấy thông tin của 1 user (Admin)
 const getCurrent = asyncHandler(async (req, res) => {
     //Verifile sang verifityToken (Chỗ gán req.user = decode) // file middleware -> verifitytoken.js
     const { _id } = req.user;
@@ -93,7 +93,7 @@ const getCurrent = asyncHandler(async (req, res) => {
 });
 
 
-// Lấy thông tin của tất cả user
+// Lấy thông tin của tất cả user ( Admin)
 const getUsers = asyncHandler(async (req, res) => {
     const response = await User.find().select('-refreshToken -password -role');
     return res.status(200).json({
@@ -124,7 +124,7 @@ const updateUser = asyncHandler(async (req, res) => {
     const response = await User.findByIdAndUpdate(_id, req.body, { new: true }).select('-password -role');
     return res.status(200).json({
         success: response ? true : false,
-        updatedUser: response ? response : `Cập nhật user thành công!` 
+        updatedUser: response ? response : `Cập nhật user thành công!`
     })
 });
 
@@ -136,7 +136,7 @@ const updateUserByAdmin = asyncHandler(async (req, res) => {
     const response = await User.findByIdAndUpdate(id, req.body, { new: true }).select('-password -role -refreshToken');
     return res.status(200).json({
         success: response ? true : false,
-        updatedUser: response ? response : `Cập nhật user thành công!` 
+        updatedUser: response ? response : `Cập nhật user thành công!`
     })
 });
 
@@ -191,10 +191,8 @@ const forgotpassword = asyncHandler(async (req, res) => {
     if (!user) throw Error('Không tìm thấy người dùng!');
     const resetToken = user.createPasswordChangedToken();
     await user.save()
-
     const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu của bạn. Link này sẽ hết hạn sau 15 phút kể từ bây giờ. 
     <a href=${process.env.URL_SERVER}/api/user/reset-password/${resetToken}>Click here</a>`
-
     const data = {
         email,
         html
@@ -205,6 +203,7 @@ const forgotpassword = asyncHandler(async (req, res) => {
         rs
     })
 });
+
 
 
 

@@ -18,7 +18,7 @@ const verifyAccessToken = asyncHandler(async (req, res, next) => {
                 success: false,
                 message: "Access Token không hết hạn"
             })
-            console.log(decode);
+            // console.log(decode);
             //Verifile sang đây !!!
             // Nếu xác thực token thành công, thông tin về người dùng được giải mã từ token và được gán vào đối tượng yêu cầu (req.user) để các yêu cầu
             //  sau này có thể sử dụng thông tin này.
